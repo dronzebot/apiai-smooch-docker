@@ -8,7 +8,14 @@ from flask import Flask, request, g, Response
 from werkzeug.local import LocalProxy
 
 app = Flask(__name__)
-app.config.from_envvar('FLASK_APPLICATION_SETTINGS')
+
+
+def make_config_from_env():
+    config = {}
+    for key in os.environ:
+        config[key] = os.getenv(key)
+
+    return config
 
 def get_robot():
     robot_instace = getattr(g, '_robot', None)
@@ -97,6 +104,8 @@ def smooch_events():
     return resp
 
 def main(argv):
+    app.config.update(make_config_from_env())
+    init_smooch()
     app.run(host='0.0.0.0', port=int(argv[0]), debug=False)
 
 if __name__ == "__main__":

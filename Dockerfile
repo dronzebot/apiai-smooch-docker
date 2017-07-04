@@ -73,11 +73,10 @@ RUN pip install -r requirements.txt
 
 RUN { echo '#!/bin/bash'; \
       echo 'set -e'; \
-      echo 'export FLASK_APPLICATION_SETTINGS=/mnt/config/smoochbot-apiai.properties'; \
 	  echo 'echo $(pwd)'; \
       echo 'python ./application.py 8079'; \
-    } > /entrypoint-apiaibot.sh \
- && chmod +x /entrypoint-apiaibot.sh
+    } > /entrypoint.sh \
+ && chmod +x /entrypoint.sh
 
 EXPOSE 8079
-CMD ["/entrypoint-apiaibot.sh"]
+CMD ["/entrypoint.sh"]

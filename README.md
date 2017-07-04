@@ -79,3 +79,23 @@ goodbye.
 * [Dronze](https://dronze.com) - This robot was built by the bot genesis team at dronze.
 * [Smooch REST API](http://docs.smooch.io/rest/) - This bot uses the Smooch REST API to create your bots ears and mouth to the smooch dialog.
 * [API.ai REST API](https://docs.api.ai/docs/reference) - how to make calls to the API.ai REST endpoints for conversations.
+
+# building the image
+
+1) Retrieve the docker login command that you can use to authenticate your Docker client to your registry: 
+Note: 
+If you receive an "Unknown options: --no-include-email" error, install the latest version of the AWS CLI. Learn more
+
+`aws ecr get-login --no-include-email --region us-west-2`
+
+2) Run the docker login command that was returned in the previous step. 
+
+
+3) Build your Docker image using the following command. For information on building a Docker file from scratch see the instructions here. You can skip this step if your image is already built:
+`docker build -t dronze-webbot .`
+
+4) After the build completes, tag your image so you can push the image to this repository:
+`docker tag dronze-webbot:latest 705212546939.dkr.ecr.us-west-2.amazonaws.com/dronze-webbot:latest`
+
+5) Run the following command to push this image to your newly created AWS repository:
+`docker push 705212546939.dkr.ecr.us-west-2.amazonaws.com/dronze-webbot:latest`
